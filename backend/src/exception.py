@@ -1,4 +1,5 @@
 import sys
+import src.logger as logging
 
 def error_message_details(error, error_details:sys):
     _, _, exc_tb = error_details.exc_info()
@@ -18,5 +19,5 @@ if __name__ == "__main__":
     try:
         a = 1/0
     except Exception as e:
-        # logging.error("Error occured")
+        logging.error("Error occured")
         raise BaseException(e, sys)

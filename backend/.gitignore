@@ -110,9 +110,12 @@ venv
 env/
 venv/
 ENV/
+myenv/
 .venv/
 env.bak/
 venv.bak/
+
+.env
 
 # Spyder project settings
 spyderproject
@@ -138,5 +141,6 @@ pytype/
 # Cython debug symbols
 cython_debug/
 
+# data/
 # PyCharm
 # .idea/
