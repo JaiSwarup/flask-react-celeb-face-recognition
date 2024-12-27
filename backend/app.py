@@ -1,5 +1,4 @@
-from io import BytesIO
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 from src.components.get_face_from_image import get_face_from_image
 from src.components.get_embedding_from_face import get_embedding_from_face
@@ -20,7 +19,7 @@ pc = Pinecone(api_key=api_key)
 index = pc.Index("face-features")
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../frontend/dist', static_url_path='/')
 CORS(app, resources={r"/api/*": {"origin" : "*"}})
 
 @app.route('/api/get_celeb', methods=['POST'])
@@ -80,7 +79,7 @@ def get_celeb():
 
 @app.route('/', methods=['GET'])
 def home():
-    return jsonify({'message': 'Hello, World!'})
+    return send_from_directory(app.static_folder, 'index.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
