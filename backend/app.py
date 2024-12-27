@@ -21,7 +21,7 @@ index = pc.Index("face-features")
 
 
 app = Flask(__name__)
-# CORS(app, resources={r"/api/*": {"origin" : "localhost:5173"}})
+CORS(app, resources={r"/api/*": {"origin" : "*"}})
 
 @app.route('/api/get_celeb', methods=['POST'])
 def get_celeb():
@@ -75,7 +75,7 @@ def get_celeb():
     
         
     response = jsonify({'actors': actors})
-    # response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
 @app.route('/', methods=['GET'])
