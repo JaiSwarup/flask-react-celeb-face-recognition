@@ -115,7 +115,7 @@ const WebcamCapture = () => {
 
             try {
               const response = await axios.post(
-                import.meta.env.VITE_BACKEND_URL + "api/get_celeb",
+                "/api/get_celeb",
                 formData,
                 {
                   headers: {
