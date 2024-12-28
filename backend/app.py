@@ -1,3 +1,10 @@
+import os
+import tensorflow as tf
+tf.get_logger().setLevel('INFO')
+tf.autograph.set_verbosity(1)
+
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 from src.components.get_face_from_image import get_face_from_image
@@ -5,9 +12,9 @@ from src.components.get_embedding_from_face import get_embedding_from_face
 from PIL import Image
 import base64
 from keras_vggface.vggface import VGGFace
-import os
 from pinecone import Pinecone
 from dotenv import load_dotenv
+
 
 
 load_dotenv()
@@ -18,8 +25,11 @@ pc = Pinecone(api_key=api_key)
 
 index = pc.Index("face-features")
 
+client_path = os.path.join(os.getcwd(), 'backend','client')
+print(client_path)
 
-app = Flask(__name__, static_folder='../frontend/dist', static_url_path='/')
+
+app = Flask(__name__, static_folder=client_path, static_url_path='/')
 CORS(app, resources={r"/api/*": {"origin" : "*"}})
 
 @app.route('/api/get_celeb', methods=['POST'])
@@ -81,5 +91,9 @@ def get_celeb():
 def home():
     return send_from_directory(app.static_folder, 'index.html')
 
+
+PORT = os.getenv("PORT", default='5000')
+HOST = os.getenv("HOST", default='0.0.0.0')
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=PORT, host=HOST)
